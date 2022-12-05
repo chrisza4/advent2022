@@ -5,6 +5,8 @@
 (defn str-to-int [i]
   (Integer/parseInt i))
 
+; Input "3-4,5-8"
+; Output ((3 4) (5 8))
 (defn line-to-ranges [line]
   (->> (str/split line #",")
        (map #(str/split % #"-"))
