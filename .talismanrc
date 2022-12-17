@@ -1,4 +1,6 @@
 fileignoreconfig:
+- filename: clojure/src/day1clj/day10.clj
+  checksum: c6de3d4435e72befe8210cdc34fa5aeb818c1abacb3eac4c4632354ed73cc576
 - filename: js/pnpm-lock.yaml
   checksum: 9d5484e5a039d3c92ea7f1b8f47eb600794917b1a1dc8a75d80016d2bcc0d769
 version: "1.0"

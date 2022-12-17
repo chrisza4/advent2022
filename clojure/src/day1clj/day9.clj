@@ -135,14 +135,3 @@
               [next-state next-record] (execute-move-record-state state current-move knot-keys-2 record)]
           (recur next-state next-record (inc move-index)))))))
 
-
-
-(comment
-  (read-input)
-  (move initial-state "R")
-  (move {:h {:x 0, :y 0}, :t {:x 0, :y 0}} "R")
-  (let [[state record] (execute-move-record-y initial-state {:direction "R" :times 4} #{})]
-    (count record))
-  (keys initial-state-2)
-  (conj #{[0 1] [0 2]} [0 3])
-  (drop 1 (drop 1 [2 3 4 5])))
