@@ -34,13 +34,11 @@
   (testing "Move item to monkey 3"
     (let [new-monkeys (move-first-item-to fixture 9999 0 3)]
       (is
-       (=
-        (get-in new-monkeys [3 :items])
-        [74 9999]))
+       (= (get-in new-monkeys [3 :items])
+          [74 9999]))
       (is
-       (=
-        (get-in new-monkeys [0 :items])
-        [98])))))
+       (= (get-in new-monkeys [0 :items])
+          [98])))))
 
 (comment
   (move))
