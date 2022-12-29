@@ -1,17 +1,23 @@
 const fs = require("fs")
 
+// Operation on coordinate set
 function addCoordinateSet(set, coordinate) {
   set.add(coordinate.toString())
 }
 function coordinateSetToArray(set) {
   return Array.from(set).map((c) => c.split(",").map((p) => parseInt(p)))
 }
+function existsCooridate(set, coordinate) {
+  return !set.has(coordinate.toString())
+}
+
 function readInput() {
   const input = fs.readFileSync("./inputday12.txt", { encoding: "utf8" })
   return input.split("\n").filter((i) => !!i)
 }
 
-function constructGraph(graph, currentCoordinates, level, visited) {
+function findLevel(graph, currentCoordinates, level, visited) {
+  // Breadth-first search
   let newSetOfCurrentCooridnates = new Set()
   for (const currentCoodinate of currentCoordinates) {
     const label = getLabel(graph, currentCoodinate)
@@ -21,7 +27,7 @@ function constructGraph(graph, currentCoordinates, level, visited) {
     const walkAbleCoordinates = findWalkAbleCoordinates(
       graph,
       currentCoodinate
-    ).filter((c) => !visited.has(c.toString()))
+    ).filter((c) => existsCooridate(visited, c))
     walkAbleCoordinates.forEach((w) =>
       addCoordinateSet(newSetOfCurrentCooridnates, w)
     )
@@ -33,7 +39,7 @@ function constructGraph(graph, currentCoordinates, level, visited) {
     newSetOfCurrentCooridnates
   )
   newArrayOfCurrentCooridnates.forEach((n) => addCoordinateSet(visited, n))
-  return constructGraph(graph, newArrayOfCurrentCooridnates, level + 1, visited)
+  return findLevel(graph, newArrayOfCurrentCooridnates, level + 1, visited)
 }
 
 function getLabel(graph, coordinate) {
@@ -67,24 +73,37 @@ function isWalkable(label1, label2) {
 }
 
 function findStartingPoint(graph) {
-  for (let i = 0; i <= graph.length; i++) {
-    for (let j = 0; j <= graph[i].length; j++) {
-      if (graph[i][j] === "S") {
-        return [i, j]
+  return findPoints(graph, "S")[0]
+}
+
+function findPoints(graph, label) {
+  const result = []
+  for (let i = 0; i < graph.length; i++) {
+    for (let j = 0; j < graph[i].length; j++) {
+      if (graph[i][j] === label) {
+        result.push([i, j])
       }
     }
   }
-  throw Error("Start not found")
+  return result
 }
 
 function main() {
   const graph = readInput()
-  const result = constructGraph(graph, [findStartingPoint(graph)], 0, new Set())
-  console.log(result)
+  const result = findLevel(graph, [findStartingPoint(graph)], 0, new Set())
+  console.log("Result1:", result)
 }
 
+function main2() {
+  const graph = readInput()
+  const result = findLevel(graph, findPoints(graph, "a"), 0, new Set())
+  console.log("Result2:", result)
+}
+
+// eslint-disable-next-line no-undef
 if (process.env.NODE_ENV !== "test") {
   main()
+  main2()
 }
 
 module.exports = {
