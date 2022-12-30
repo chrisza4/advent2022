@@ -64,5 +64,4 @@
   (compare 1 -1)
   (compare-packet [[4,4],4,4]
                   [[4,4],4,4,4])
-  (concat [1 2] [3 4])
-  (seq/position [1 2] 2))
+  (concat [1 2] [3 4]))

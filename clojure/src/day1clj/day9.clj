@@ -1,11 +1,12 @@
 (ns day1clj.day9
   (:require [clojure.string :as str]))
 
+(defn parse-input-row [row]
+  (let [row-split (str/split row #" ")]
+    {:direction (nth row-split 0)
+     :times (Integer/parseInt (nth row-split 1))}))
+
 (defn read-input []
-  (defn parse-input-row [row]
-    (let [row-split (str/split row #" ")]
-      {:direction (nth row-split 0)
-       :times (Integer/parseInt (nth row-split 1))}))
   (let [raw-input (str/split (slurp "inputday9.txt") #"\n")]
     (map parse-input-row raw-input)))
 
